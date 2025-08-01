@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url("/static/images/cal.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 30px;
+      }
+      form {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        max-width: 400px;
+        margin: auto;
+        border-radius: 8px;
+      }
+      input,
+      button {
+        width: 100%;
+        margin: 8px 0;
+        padding: 10px;
+      }
+      button {
+        background: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      p a {
+        color: #007bff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="registerForm">
+      <h2>Register</h2>
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="tel" name="mobile" placeholder="Mobile Number" required />
+      <input type="date" name="dob" placeholder="DOB" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+      <p id="message"></p>
+      <p>Already have an account? <a href="/login-page">Login</a></p>
+    </form>
+
+    <script>
+      document.getElementById("registerForm").onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const res = await fetch("/register", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        document.getElementById("message").innerText =
+          data.message || data.error;
+        if (data.message) {
+          setTimeout(() => (window.location.href = "/login-page"), 1000);
+        }
+      };
+    </script>
+  </body>
+</html>

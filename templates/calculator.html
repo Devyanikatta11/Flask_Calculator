@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url("/static/images/cal.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 30px;
+      }
+      form {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        max-width: 400px;
+        margin: auto;
+        border-radius: 8px;
+      }
+      input,
+      select,
+      button {
+        width: 100%;
+        margin: 8px 0;
+        padding: 10px;
+      }
+      button {
+        background: #8e44ad;
+        color: white;
+        border: none;
+      }
+      p,
+      .logout {
+        text-align: center;
+        color: black;
+      }
+      .logout a {
+        color: red;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="calcForm">
+      <h2>Calculator</h2>
+      <input type="number" name="a" placeholder="Enter first number" required />
+      <input
+        type="number"
+        name="b"
+        placeholder="Enter second number"
+        required
+      />
+      <select name="operation" required>
+        <option value="">Select Operation</option>
+        <option value="addition">Addition</option>
+        <option value="substraction">Subtraction</option>
+        <option value="multiplication">Multiplication</option>
+        <option value="division">Division</option>
+        <option value="power">Power</option>
+      </select>
+      <button type="submit">Calculate</button>
+      <p id="message"></p>
+      <div class="logout"><a href="#" onclick="logout()">Logout</a></div>
+    </form>
+
+    <script>
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "/login-page";
+      }
+
+      document.getElementById("calcForm").onsubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem("token");
+        if (!token) return alert("Please login first.");
+
+        const formData = new FormData(e.target);
+        const res = await fetch("/Calculator", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token },
+          body: formData,
+        });
+
+        const data = await res.json();
+        document.getElementById("message").innerText =
+          "Result: " + (data.Result || data.error);
+
+        // Clear result after 15 minutes
+        setTimeout(() => {
+          document.getElementById("message").innerText = "";
+        }, 15 * 60 * 1000);
+      };
+    </script>
+  </body>
+</html>
