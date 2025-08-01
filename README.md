@@ -18,14 +18,18 @@ A simple Flask application with user authentication using JWT (JSON Web Tokens) 
 ## 🏗️ Project Structure
 
 /project-root
-├── app.py                      # Main Flask app
-├── requirements.txt            # Python dependencies
-├── proj_config_template.py     # Sample config (do NOT commit real config)
-├── Project/
-│   └── utils.py                # Utility functions (e.g., Calculator)
-├── database.sql                # SQL script to create DB schema
-└── static/
-    └── favicon.ico             # Optional browser tab icon
+├── app.py
+├── requirements.txt
+├── .env
+├── /templates
+│   ├── index.html
+│   ├── login.html
+│   └── dashboard.html
+├── /static
+│   └── cal.jpg (optional)
+└── /Project
+    └── utils.py
+
 
 ---
 
