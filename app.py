@@ -2,28 +2,29 @@ from flask import Flask, request, jsonify,render_template
 from flask_mysqldb import MySQL
 from flask_jwt_extended import JWTManager, create_access_token,jwt_required,get_jwt,get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+import os
 import datetime
 from Project.utils import Calculator
-import proj_config
 
 
-
-CalObj = Calculator()
-
+load_dotenv()  # Load from .env file
 
 app = Flask(__name__)
 
-app.config["JWT_SECRET_KEY"] = "secre-key"
+
+# Set config from environment variables
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')  #
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+
+
 jwt = JWTManager(app)
-
-# MySQL config
-app.config['MYSQL_HOST'] = proj_config.HOST
-app.config['MYSQL_USER'] = proj_config.USER
-app.config['MYSQL_PASSWORD'] = proj_config.PASSWORD
-app.config['MYSQL_DB'] = proj_config.DB
-
 mysql = MySQL(app)
 
+CalObj = Calculator()
 
 @app.route('/')
 def index():
