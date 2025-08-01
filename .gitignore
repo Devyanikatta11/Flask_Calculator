@@ -1,0 +1,6 @@
+__pycache__/     # Compiled Python bytecode cache
+*.pyc            # Individual compiled Python files
+venv/            # Your virtual environment
+.env             # Environment variables (secrets, DB creds, etc.)
+proj_config.py   # Likely contains config/secrets — good idea to ignore
+sample.ipynb     # Local test or experiment notebook — optional
