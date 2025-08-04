@@ -1,6 +1,6 @@
 CREATE DATABASE calculator;
 
-USE userdb;
+USE calculator;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
